@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import AuthChoiceCard from "../reusable/AuthChoiceCard";
-import { authContent } from "@/app/auth/page";
+import { authContent } from "./AuthPage";
 
 export default function StepTwo() {
   const { setStep } = useContext(authContent);

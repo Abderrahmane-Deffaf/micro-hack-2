@@ -15,4 +15,7 @@
   .wrapper {
     @apply px-4 mx-auto max-w-[1200px];
   }
+  .container {
+    @apply px-8 py-12
+  }
 }

@@ -7,9 +7,9 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex min-w-full bg-blue-400 ">
+    <main className="flex min-w-full  ">
       <SideBar />
-      <div className="min-w-full">{children}</div>
+      <div className="w-full">{children}</div>
 
       <Toaster closeButton richColors />
     </main>
