@@ -22,10 +22,10 @@ export default async function GetFiles() {
       return (
         <div className=" flex flex-col gap-2">
           {data.map((file: any) => (
-            <Link href={`/home/file/${file?._id}`} className=" flex justify-between border border-orange-500 rounded-md p-2 " key={file?._id}>
+            <div  className=" flex justify-between border border-orange-500 rounded-md p-2 " key={file?._id}>
               <p>{file?.Original_Name}</p>
               <p>{moment(file?.createdAt).format("MMM Do YY")}</p>
-            </Link>
+            </div>
           ))}
         </div>
       );

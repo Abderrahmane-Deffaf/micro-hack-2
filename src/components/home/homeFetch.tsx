@@ -29,15 +29,17 @@ export async function getUser() {
   }
 }
 
-export async function getUserRole() {
+export async function   getUserRole(id:string) {
   const token = getCookieValue();
+  console.log(id);
+
   console.log(token);
   if (token) {
     try {
       console.log(baseUrl);
 
       //
-      const res = await fetch(`${baseUrl}/user-role`, {
+      const res = await fetch(`${baseUrl}/role/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -112,6 +114,26 @@ export async function getDocumentText(id: string) {
       },
     });
     const data = await response.json();
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getActualText(pathText: string) {
+
+  const token = getCookieValue();
+  console.log(token);
+  try {
+    const response = await fetch(`${baseUrl}${pathText}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.text();
     console.log(data);
 
     return data;

@@ -16,15 +16,19 @@ import { getRoles, getUser, getUserRole } from "./homeFetch";
 export default function AccessUsers() {
   const { form } = useContext(pdfContext);
 
-  const [roles, setRoles] = useState();
+  const [roles, setRoles] = useState<any[]>([]);
   useEffect(() => {
     async function getRolesData() {
       const userData = await getUser();
-      const userRole = await getUserRole();
-      console.log(userRole);
+      if (userData?._id) {
+        const userRole = await getUserRole(userData._id);
+        setRoles(userRole);
+        //form.setValue("roles", userRole)
+        console.log(userRole);
+        console.log(userData);
+      }
 
-      console.log(userData) ; 
-      if(userData?._id) {
+      if (userData?._id) {
         const data = await getRoles(userData._id);
         console.log(data);
       }
@@ -40,17 +44,24 @@ export default function AccessUsers() {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Roles</FormLabel>
-            <MultiSelector className=" w-fit" onValuesChange={field.onChange} values={field.value}>
+            <MultiSelector
+              className=" w-fit"
+              onValuesChange={field.onChange}
+              values={field.value}
+            >
               <MultiSelectorTrigger>
-                <MultiSelectorInput placeholder="Select your framework" />
+                <MultiSelectorInput placeholder="Select Added roles" />
               </MultiSelectorTrigger>
               <MultiSelectorContent>
                 <MultiSelectorList className=" bg-slate-800 text-white">
-                  <MultiSelectorItem value={"React1"}>React</MultiSelectorItem>
-                  <MultiSelectorItem value={"Vue1"}>Vue</MultiSelectorItem>
-                  <MultiSelectorItem value={"Svelte1"}>
-                    Svelte
-                  </MultiSelectorItem>
+                  {roles.map((role) => (
+                    <MultiSelectorItem
+                      key={role?._id}
+                      value={role?.Role_Name}
+                    >
+                      {role?.Role_Name}
+                    </MultiSelectorItem>
+                  ))}
                 </MultiSelectorList>
               </MultiSelectorContent>
             </MultiSelector>
@@ -60,3 +71,4 @@ export default function AccessUsers() {
     </div>
   );
 }
+

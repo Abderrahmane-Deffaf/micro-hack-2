@@ -13,7 +13,9 @@ import deleteIcon from "@/assets/home/delete.svg";
 import RenderTheFile from "./RenderTheFile";
 import AccessUsers from "./AccessUsers";
 import ChatBot from "./ChatBot";
-import { getDocumentText, uploadDocument } from "./homeFetch";
+import { toast } from "sonner";
+
+import { getActualText, getDocumentText, uploadDocument } from "./homeFetch";
 
 const fileSchema = z
   .instanceof(File, { message: "Required" })
@@ -27,9 +29,8 @@ const fileSchema = z
 
 const formSchema = z.object({
   file: z.any(),
-  persons: z.array(z.string()),
-  roles: z.array(z.string()),
-  rolesHide: z.array(z.string()),
+  roles: z.array(z.any()),
+  rolesHide: z.array(z.any()),
   content: z.string(),
 });
 type PdfType = z.infer<typeof formSchema>;
@@ -50,7 +51,6 @@ export default function PdfUpload() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       file: undefined,
-      persons: [],
       roles: [],
       rolesHide: [],
       content: "",
@@ -63,10 +63,15 @@ export default function PdfUpload() {
 
     if (files && files.length > 0) {
       console.log(files[0]);
+      setFile(files[0]);
       const data = await uploadDocument(files[0]);
       console.log(data);
-      if (data?._id) {
-        const res = await getDocumentText(data._id);
+      if (data?.Document_Id) {
+        const res = await getDocumentText(data.Document_Id);
+        if (res?.Text_Path) {
+          const text = await getActualText(res.Text_Path);
+          console.log(text);
+        }
         console.log(res);
       }
     }
@@ -79,6 +84,7 @@ export default function PdfUpload() {
   // search in the text
   // hide section from some specific users and roles
   function onSubmit(values: PdfType) {
+    toast.success("File saved");
     console.log(values);
   }
   return (
@@ -134,13 +140,16 @@ export default function PdfUpload() {
                 </Button>
               </div>
             )}
-            <AccessUsers />
-            {/* {file && } */}
-            <RenderTheFile />
+            {file && (
+              <>
+                <AccessUsers />
+                <RenderTheFile />
+              </>
+            )}
           </form>
         </Form>
+        {file && <ChatBot />}
         {/* chat bot */}
-        <ChatBot />
       </div>
     </pdfContext.Provider>
   );

@@ -9,7 +9,6 @@ import { Input } from "../ui/input";
 import SearchIcon from "@/assets/home/search.svg";
 import Image from "next/image";
 import { useDebouncedCallback } from "use-debounce";
-import { set } from "react-hook-form";
 import { FormField, FormItem, FormLabel } from "../ui/form";
 import {
   MultiSelector,
@@ -20,13 +19,15 @@ import {
   MultiSelectorTrigger,
 } from "../extention/multi-select";
 import Mark from "mark.js";
+import { getRoles, getUser, getUserRole } from "./homeFetch";
+import {toast} from 'sonner'
 
 export default function RenderTheFile() {
   const { file, form } = useContext(pdfContext);
   const id = useId();
-  const [content, setContent] = useState<string>(
-    "content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello content is loading is content hello vvcontent is loading is content hello content is loading is content hello content is loading is content hello "
-  );
+  const [content, setContent] = useState<string>("هذا نص عربي تجريبي لإنشاء محتوى باللغة العربية. تم توليد هذا النص لغرض الاختبار والتجربة فقط. يمكن استخدامه في تطوير واختبار التطبيقات والمواقع. اللغة العربية لها نظام كتابة من اليمين إلى اليسار. تتكون الكلمات في اللغة العربية من حروف متصلة. العربية تعتبر واحدة من أكثر اللغات تحدثاً في العالم. تمتلك العربية تاريخاً ثرياً وثقافة متنوعة. الخط العربي له جمال فني خاص ويعتبر فناً عريقاً. تحتوي اللغة العربية على مفردات وتعابير متعددة. القراءة والكتابة بالعربية تتطلب مهارة وتدريباً. الأدب العربي يضم أعمالاً أدبية عظيمة ومتنوعة. العربية تعتبر لغة رسمية في العديد من البلدان. تعد اللغة العربية جزءاً هاماً من الهوية الثقافية العربية. العربية تحتوي على مجموعة متنوعة من اللهجات المحلية. العربية تعد لغة القرآن الكريم والدين الإسلامي. الشعر العربي يعتبر من أعظم أشكال الأدب العربي. اللغة العربية تتمتع بنظام دقيق لتصريف الأفعال. تعتبر العربية لغة جميلة وغنية بالتعابير والمفردات. العربية تستخدم في العديد من المجالات العلمية والأدبية. هذا نص عربي تجريبي لإنشاء محتوى باللغة العربية. تم توليد هذا النص لغرض الاختبار والتجربة فقط. يمكن استخدامه في تطوير واختبار التطبيقات والمواقع. اللغة العربية لها نظام كتابة من اليمين إلى اليسار. تتكون الكلمات في اللغة العربية من حروف متصلة. العربية تعتبر واحدة من أكثر اللغات تحدثاً في العالم. تمتلك العربية تاريخاً ثرياً وثقافة متنوعة. الخط العربي له جمال فني خاص ويعتبر فناً عريقاً. تحتوي اللغة العربية على مفردات وتعابير متعددة. القراءة والكتابة بالعربية تتطلب مهارة وتدريباً. الأدب العربي يضم أعمالاً أدبية عظيمة ومتنوعة. العربية تعتبر لغة رسمية في العديد من البلدان. تعد اللغة العربية جزءاً هاماً من الهوية الثقافية العربية. العربية تحتوي على مجموعة متنوعة من اللهجات المحلية. العربية تعد لغة القرآن الكريم والدين الإسلامي. الشعر العربي يعتبر من أعظم أشكال الأدب العربي. اللغة العربية تتمتع بنظام دقيق لتصريف الأفعال. تعتبر العربية لغة جميلة وغنية بالتعابير والمفردات. العربية تستخدم في العديد من المجالات العلمية والأدبية. هذا نص عربي تجريبي لإنشاء محتوى باللغة العربية. تم توليد هذا النص لغرض الاختبار والتجربة فقط. يمكن استخدامه في تطوير واختبار التطبيقات والمواقع. اللغة العربية لها نظام كتابة من اليمين إلى اليسار. تتكون الكلمات في اللغة العربية من حروف متصلة. العربية تعتبر واحدة من أكثر اللغات تحدثاً في العالم. تمتلك العربية تاريخاً ثرياً وثقافة متنوعة. الخط العربي له جمال فني خاص ويعتبر فناً عريقاً. تحتوي اللغة العربية على مفردات وتعابير متعددة. القراءة والكتابة بالعربية تتطلب مهارة وتدريباً. الأدب العربي يضم أعمالاً أدبية عظيمة ومتنوعة. العربية تعتبر لغة رسمية في العديد من البلدان. تعد اللغة العربية جزءاً هاماً من الهوية الثقافية العربية. العربية تحتوي على مجموعة متنوعة من اللهجات المحلية. العربية تعد لغة القرآن الكريم والدين الإسلامي. الشعر العربي يعتبر من أعظم أشكال الأدب العربي. اللغة العربية تتمتع بنظام دقيق لتصريف الأفعال. تعتبر العربية لغة جميلة وغنية بالتعابير والمفردات. العربية تستخدم في العديد من المجالات العلمية والأدبية.");
+
+  const [roles, setRoles] = useState<any[]>([]);
 
   const [textToHide, setTextToHide] = useState<string>("");
 
@@ -68,6 +69,25 @@ export default function RenderTheFile() {
     getFileText();
   }, [file]);
 
+  useEffect(() => {
+    async function getRolesData() {
+      const userData = await getUser();
+      if (userData?._id) {
+        const userRole = await getUserRole(userData._id);
+        setRoles(userRole);
+        //form.setValue("roles", userRole)
+        console.log(userRole);
+        console.log(userData);
+      }
+
+      if (userData?._id) {
+        const data = await getRoles(userData._id);
+        console.log(data);
+      }
+    }
+    getRolesData();
+  }, []);
+
   const handleMouseUp = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log("mouse up");
 
@@ -75,6 +95,7 @@ export default function RenderTheFile() {
     if (!selection) return;
     const selectedString = selection.toString().trim();
     setTextToHide(selectedString);
+    toast.success(`Text selected: ${selectedString} will be showed to the selected roles`);
     console.log(selectedString);
   };
   return (
@@ -95,17 +116,18 @@ export default function RenderTheFile() {
                 values={field.value}
               >
                 <MultiSelectorTrigger>
-                  <MultiSelectorInput placeholder="Select your framework" />
+                  <MultiSelectorInput placeholder="Select Added roles" />
                 </MultiSelectorTrigger>
                 <MultiSelectorContent>
                   <MultiSelectorList className=" bg-slate-800 text-white">
-                    <MultiSelectorItem value={"React3"}>
-                      React
-                    </MultiSelectorItem>
-                    <MultiSelectorItem value={"Vue3"}>Vue</MultiSelectorItem>
-                    <MultiSelectorItem value={"Svelte3"}>
-                      Svelte
-                    </MultiSelectorItem>
+                    {roles?.map((role: any) => (
+                      <MultiSelectorItem
+                        key={role?._id}
+                        value={role?.Role_Name}
+                      >
+                        {role?.Role_Name}
+                      </MultiSelectorItem>
+                    ))}
                   </MultiSelectorList>
                 </MultiSelectorContent>
               </MultiSelector>
