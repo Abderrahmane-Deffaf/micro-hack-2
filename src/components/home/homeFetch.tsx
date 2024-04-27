@@ -106,7 +106,7 @@ export async function getDocumentText(id: string) {
   const token = getCookieValue();
   console.log(token);
   try {
-    const response = await fetch(`${baseUrl}/document/document/${id}`, {
+    const response = await fetch(`${baseUrl}/document/one/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
