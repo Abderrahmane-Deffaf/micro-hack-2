@@ -1,10 +1,13 @@
-export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-export const baseUrlAi = process.env.NEXT_PUBLIC_BASE_URL_AI;
+import { baseUrl } from "@/lib/helper";
+import { cookies } from "next/headers";
 
-export async function checkToken(token: string | undefined) {
+export async function getUserServer() {
+  const token = cookies().get("auth")?.value;
   console.log(token);
   if (token) {
     try {
+      console.log(baseUrl);
+
       //
       const res = await fetch(`${baseUrl}/user`, {
         headers: {
@@ -16,7 +19,7 @@ export async function checkToken(token: string | undefined) {
       if (data?.error) {
         return false;
       }
-      return !!data?.Username || !!data?.Name;
+      return data;
     } catch (e) {
       console.log(e);
       return false;

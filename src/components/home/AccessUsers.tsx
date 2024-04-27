@@ -20,46 +20,27 @@ export default function AccessUsers() {
   useEffect(() => {
     async function getRolesData() {
       const userData = await getUser();
-      console.log(userData) ; 
-      
-      const data = await getUserRole();
-      console.log(data);
+      const userRole = await getUserRole();
+      console.log(userRole);
 
-      const roles = await getRoles("hello");
+      console.log(userData) ; 
+      if(userData?._id) {
+        const data = await getRoles(userData._id);
+        console.log(data);
+      }
     }
     getRolesData();
   }, []);
 
   return (
     <div className=" flex flex-col gap-4">
-      {/* <FormField
-        control={form.control}
-        name="persons"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Persons</FormLabel>
-            <MultiSelector onValuesChange={field.onChange} values={field.value}>
-              <MultiSelectorTrigger>
-                <MultiSelectorInput placeholder="Select your framework" />
-              </MultiSelectorTrigger>
-              <MultiSelectorContent>
-                <MultiSelectorList className=" bg-slate-800 text-white">
-                  <MultiSelectorItem value={"React"}>React</MultiSelectorItem>
-                  <MultiSelectorItem value={"Vue"}>Vue</MultiSelectorItem>
-                  <MultiSelectorItem value={"Svelte"}>Svelte</MultiSelectorItem>
-                </MultiSelectorList>
-              </MultiSelectorContent>
-            </MultiSelector>
-          </FormItem>
-        )}
-      /> */}
       <FormField
         control={form.control}
         name="roles"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Roles</FormLabel>
-            <MultiSelector onValuesChange={field.onChange} values={field.value}>
+            <MultiSelector className=" w-fit" onValuesChange={field.onChange} values={field.value}>
               <MultiSelectorTrigger>
                 <MultiSelectorInput placeholder="Select your framework" />
               </MultiSelectorTrigger>

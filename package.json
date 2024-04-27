@@ -23,6 +23,7 @@
     "next-themes": "^0.3.0",
     "openai": "^4.38.5",
     "react": "^18",
+    "react-audio-player": "^0.17.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.3",
     "sonner": "^1.4.41",

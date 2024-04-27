@@ -10,10 +10,7 @@ import Image from "next/image";
 import fileUpoload from "@/assets/home/fileUpload.svg";
 import { createContext, useState } from "react";
 import deleteIcon from "@/assets/home/delete.svg";
-import RenderTheFile from "./RenderTheFile";
-import AccessUsers from "./AccessUsers";
-import ChatBot from "./ChatBot";
-import { uploadDocument } from "./homeFetch";
+import AudioRender from "./AudioRender";
 
 const fileSchema = z
   .instanceof(File, { message: "Required" })
@@ -29,22 +26,21 @@ const formSchema = z.object({
   file: z.any(),
   persons: z.array(z.string()),
   roles: z.array(z.string()),
-  rolesHide: z.array(z.string()),
   content: z.string(),
 });
-type PdfType = z.infer<typeof formSchema>;
+type AudioType = z.infer<typeof formSchema>;
 
-type PdfContextType = {
+type AudioContextType = {
   file: File | undefined;
-  form: UseFormReturn<PdfType, any, undefined>;
+  form: UseFormReturn<AudioType, any, undefined>;
 };
 
-export const pdfContext = createContext<PdfContextType>({
+export const AudioContext = createContext<AudioContextType>({
   file: undefined,
-  form: {} as UseFormReturn<PdfType, any, undefined>,
+  form: {} as UseFormReturn<AudioType, any, undefined>,
 });
 
-export default function PdfUpload() {
+export default function UploadAudio() {
   // first of all upload the pdf
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,19 +48,16 @@ export default function PdfUpload() {
       file: undefined,
       persons: [],
       roles: [],
-      rolesHide: [],
       content: "",
     },
   });
   const [file, setFile] = useState<File | undefined>(undefined);
 
-  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
 
     if (files && files.length > 0) {
       console.log(files[0]);
-      const data = await uploadDocument(files[0]);
-      console.log(data);
 
       setFile(files[0]);
     }
@@ -76,11 +69,11 @@ export default function PdfUpload() {
   // adding the persons means they can not see the file and verse versa
   // search in the text
   // hide section from some specific users and roles
-  function onSubmit(values: PdfType) {
+  function onSubmit(values: AudioType) {
     console.log(values);
   }
   return (
-    <pdfContext.Provider value={{ file, form }}>
+    <AudioContext.Provider value={{ file, form }}>
       <div className=" space-y-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -94,12 +87,12 @@ export default function PdfUpload() {
                       className=" items-center flex cursor-pointer gap-2 w-fit   rounded-3xl  bg-gradient-to-r from-orange-500 to-orange-300 text-white font-semibold px-4 py-2 "
                       htmlFor="file"
                     >
-                      <span>Upload File</span>
+                      <span>Upload Audio File</span>
                       <Image src={fileUpoload} alt="file upload" />
                     </FormLabel>
                     <FormControl>
                       <Input
-                        accept="application/pdf"
+                        accept=".wav"
                         type="file"
                         name="file"
                         id="file"
@@ -132,14 +125,12 @@ export default function PdfUpload() {
                 </Button>
               </div>
             )}
-            <AccessUsers />
-            {/* {file && } */}
-            <RenderTheFile />
           </form>
         </Form>
+        {file && <AudioRender />}
+        
         {/* chat bot */}
-        <ChatBot />
       </div>
-    </pdfContext.Provider>
+    </AudioContext.Provider>
   );
 }

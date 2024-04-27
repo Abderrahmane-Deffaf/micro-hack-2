@@ -30,6 +30,7 @@ export async function getUser() {
 }
 
 export async function getUserRole() {
+
   const token = getCookieValue();
   console.log(token);
   if (token) {
@@ -68,6 +69,32 @@ export async function getRoles(id: string) {
     });
     const data = await response.json();
     console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+
+
+
+
+export async function uploadDocument(file: File) {
+  const token = getCookieValue();
+  console.log(token);
+  const formData = new FormData();
+  formData.append("file", file, file?.name);
+  try {
+    const response = await fetch(`${baseUrl}/document/upload`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,  
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
     return null;
