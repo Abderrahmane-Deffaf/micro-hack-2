@@ -1,60 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
-
-/* import {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} from "@google/generative-ai";
-
-const MODEL_NAME = "gemini-1.5-pro-latest";
-const API_KEY = "AIzaSyCFBj2GzwYz1q2OU-lYjzEbAZ3QC2dlhgA"; */
+import logo from '@/assets/home/logo.svg'
+import mainBg from '@/assets/home/bg-main.png' ; 
 
 export default function Home() {
-  /* const genAI = new GoogleGenerativeAI(API_KEY);
-  const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-
-  const generationConfig = {
-    temperature: 1,
-    topK: 0,
-    topP: 0.95,
-    maxOutputTokens: 8192,
-  };
-
-  const safetySettings = [
-    {
-      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-      threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    },
-    {
-      category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-      threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    },
-    {
-      category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-      threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    },
-    {
-      category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-      threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    },
-  ];
-
-  const chat = model.startChat({
-    generationConfig,
-    safetySettings,
-    history: [],
-  });
-
-  const result = await chat.sendMessage(
-    "resemue this text with only one option write just the result: JS typically refers to JavaScript, a high-level programming language commonly used for web development. JavaScript is often used to add interactivity and dynamic behavior to web pages. It is supported by most web browsers and can be integrated into HTML to create rich client-side experiences. JavaScript can also be used on the server-side, for example, with Node.js."
-  );
-  const response = result.response;
-  console.log(response.text()); */
 
   return (
-    <main className="flex gap-6">
-      <Link href="/auth">login</Link>
+    <main className="flex relative gap-6">
+      <section className=" relative z-10 flex flex-col gap-[5rem]  wrapper">
+        <nav className=" py-4">
+          <Link href="/">
+            <Image src={logo} alt="logo" />
+          </Link>
+        </nav>
+        <div className=" flex flex-col gap-4 max-w-[50%]">
+          <h1 className=" text-white">
+            Imagine a World Where{" "}
+            <span className=" text-orange-400 ">AI Simplifies Your Work:</span>{" "}
+            The GED Assistant That Makes You a Document Master
+          </h1>
+          <Link className=" w-fit bg-gradient-to-r from-orange-500 text-white to-orange-300 px-8 py-2 text-2xl font-bold rounded-3xl " href="/auth">Start the Journy</Link>
+        </div>
+      </section>
+
+      <Image
+        className=" w-screen h-screen z-0 object-cover absolute "
+        src={mainBg}
+        alt="main bg"
+      />
     </main>
   );
 }
