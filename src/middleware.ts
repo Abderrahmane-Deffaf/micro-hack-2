@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get("auth")?.value;
   console.log(token);
 
-  const verify = await checkToken(token);
+  const verify = !!token;
   const { nextUrl } = request;
   console.log("---------verify", verify);
   if (!verify && nextUrl.pathname.split("/").includes("home")) {
