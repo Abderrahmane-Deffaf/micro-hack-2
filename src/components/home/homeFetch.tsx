@@ -30,7 +30,6 @@ export async function getUser() {
 }
 
 export async function getUserRole() {
-
   const token = getCookieValue();
   console.log(token);
   if (token) {
@@ -76,24 +75,45 @@ export async function getRoles(id: string) {
   }
 }
 
-
-
-
-
 export async function uploadDocument(file: File) {
+  console.log(file);
+
   const token = getCookieValue();
   console.log(token);
   const formData = new FormData();
-  formData.append("file", file, file?.name);
+  formData.append("files", file, file?.name);
   try {
     const response = await fetch(`${baseUrl}/document/upload`, {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: formData,  
+      body: formData,
     });
     const data = await response.json();
     console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getDocumentText(id: string) {
+  console.log(id);
+
+  const token = getCookieValue();
+  console.log(token);
+  try {
+    const response = await fetch(`${baseUrl}/document/document/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+
     return data;
   } catch (error) {
     console.log(error);

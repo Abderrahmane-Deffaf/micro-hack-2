@@ -13,7 +13,7 @@ import deleteIcon from "@/assets/home/delete.svg";
 import RenderTheFile from "./RenderTheFile";
 import AccessUsers from "./AccessUsers";
 import ChatBot from "./ChatBot";
-import { uploadDocument } from "./homeFetch";
+import { getDocumentText, uploadDocument } from "./homeFetch";
 
 const fileSchema = z
   .instanceof(File, { message: "Required" })
@@ -65,8 +65,10 @@ export default function PdfUpload() {
       console.log(files[0]);
       const data = await uploadDocument(files[0]);
       console.log(data);
-
-      setFile(files[0]);
+      if (data?._id) {
+        const res = await getDocumentText(data._id);
+        console.log(res);
+      }
     }
   }
   // second get the file name
