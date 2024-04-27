@@ -1,3 +1,9 @@
+import PdfUpload from "@/components/home/PdfUpload";
+
 export default function page() {
-  return <div>file upload page</div>;
+  return (
+    <div className=" container">
+      <PdfUpload />
+    </div>
+  );
 }

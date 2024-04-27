@@ -31,8 +31,8 @@ const formSchema = z.object({
     .regex(/^(07|06|05)/, {
       message: "Phone number should start with 07, 06, or 05",
     }),
-  Password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+  Password: z.string().min(3, {
+    message: "Password must be at least 3 characters.",
   }),
   Domain_Name: z.string().min(5, {
     message: "Field of specialization must be at least 5 characters.",

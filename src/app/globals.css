@@ -19,3 +19,7 @@
     @apply px-8 py-12
   }
 }
+
+.removeScrollBar::-webkit-scrollbar {
+  display: none;
+}
