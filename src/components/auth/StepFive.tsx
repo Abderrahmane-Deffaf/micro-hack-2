@@ -38,7 +38,7 @@ export default function StepFive() {
     if (response?.Token) {
       console.log(response);
 
-      document.cookie = `auth=${response?.Token}; expires=Thu, 18 March 2025 12:00:00 UTC; path=/`;
+      document.cookie = `auth=${response.Token}; expires=Thu, 18 March 2025 12:00:00 UTC; path=/`;
       router.push("/home");
     }
   }

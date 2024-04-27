@@ -1,6 +1,6 @@
 import { baseUrl } from "@/lib/helper";
 import { FromType } from "./StepThree";
-import {toast} from 'sonner'
+import { toast } from "sonner";
 import { LoginType } from "./StepFour";
 import { LoginUserType } from "./StepFive";
 
@@ -21,18 +21,17 @@ export async function createOrganizationProfile(fromData: FromType) {
     });
     const data = await response.json();
     console.log(data);
-    if(data?.error) {
+    if (data?.error) {
       toast.error(data.error);
       return null;
     }
-    return data ; 
+    return data;
   } catch (error) {
     console.log(error);
     toast.error("error occured while creating organization profile");
     return null;
   }
 }
-
 
 export async function loginOrganizationProfile(fromData: LoginType) {
   try {
@@ -60,21 +59,16 @@ export async function loginOrganizationProfile(fromData: LoginType) {
   }
 }
 
+export async function loginUserProfile(formData: LoginUserType) {
+  console.log(formData);
 
-
-
-
-export async function loginUserProfile(fromData: LoginUserType) {
   try {
     const response = await fetch(`${baseUrl}/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        Email: fromData.Username,
-        Password: fromData.Password,
-      }),
+      body: JSON.stringify(formData),
     });
     const data = await response.json();
     console.log(data);

@@ -18,7 +18,7 @@ export async function checkToken(token: string | undefined) {
       if (data?.error) {
         return false;
       }
-      return true;
+      return !!data?.Username || !!data?.Name;
     } catch (e) {
       console.log(e);
       return false;

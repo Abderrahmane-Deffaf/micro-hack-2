@@ -19,6 +19,9 @@ export default function AccessUsers() {
   const [roles, setRoles] = useState();
   useEffect(() => {
     async function getRolesData() {
+      const userData = await getUser();
+      console.log(userData) ; 
+      
       const data = await getUserRole();
       console.log(data);
 

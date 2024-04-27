@@ -1,4 +1,3 @@
-"use client";
 import { getCookieValue } from "@/lib/constants";
 import { baseUrl } from "@/lib/helper";
 

@@ -78,7 +78,7 @@ export default function PdfUpload() {
   }
   return (
     <pdfContext.Provider value={{ file, form }}>
-      <div>
+      <div className=" space-y-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {!file && (
